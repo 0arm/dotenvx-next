@@ -4,7 +4,7 @@ node_modules/
 .pnp.js
 
 # Build outputs
-dist/
+# dist/ is committed so this can be consumed as a github dependency (no build on install)
 .tsbuildinfo
 *.tsbuildinfo
 

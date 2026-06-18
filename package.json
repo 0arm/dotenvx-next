@@ -1,6 +1,6 @@
 {
   "name": "@fantasticfour/dotenvx-next",
-  "version": "0.2.4",
+  "version": "0.2.4-edge.1",
   "type": "module",
   "description": "Next.js plugin that loads dotenvx secrets early — before any user code evaluates — by injecting an init bundle into webpack/turbopack runtime files at build time.",
   "repository": {
@@ -32,8 +32,7 @@
     "test": "vitest run",
     "changeset": "changeset",
     "ci:version": "changeset version",
-    "ci:publish": "changeset publish",
-    "prepare": "git config --unset core.hooksPath; git config --local include.path ../.gitconfig"
+    "ci:publish": "changeset publish"
   },
   "peerDependencies": {
     "@dotenvx/dotenvx": "^1.0.0",
@@ -47,6 +46,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.4.13",
     "@changesets/cli": "^2.31.0",
+    "@socketsecurity/bun-security-scanner": "^1.1.2",
     "@types/node": "^25.6.0",
     "@typescript/native-preview": "7.0.0-dev.20260421.2",
     "next": "^16.2.4",

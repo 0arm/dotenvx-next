@@ -59,18 +59,17 @@ export class DotenvxWebpackPlugin {
             stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONS,
           },
           () => {
-            // Determine compilation target from compiler options
-            const target = compiler.options.target;
-            const isEdge = Array.isArray(target)
-              ? target.some(
-                  (t) => typeof t === 'string' && t.includes('webworker')
-                )
-              : typeof target === 'string' && target.includes('webworker');
-
-            // Only inject into server-side compilations (not client bundles)
-            const runtimeNames = isEdge
-              ? EDGE_RUNTIME_ASSETS
-              : SERVER_RUNTIME_ASSETS;
+            // Inject into whichever runtime asset THIS compilation actually
+            // emits — server: webpack-runtime.js, edge: edge-runtime-webpack.js.
+            // Do NOT sniff compiler.options.target: Next 15's edge compilation
+            // is not tagged "webworker", so target-based selection sent the edge
+            // compilation to the server asset list and edge-runtime-webpack.js
+            // never received the values. Client compilations emit neither asset,
+            // so they are naturally skipped by the getAsset guard below.
+            const runtimeNames = new Set([
+              ...SERVER_RUNTIME_ASSETS,
+              ...EDGE_RUNTIME_ASSETS,
+            ]);
 
             for (const assetName of runtimeNames) {
               if (!compilation.getAsset(assetName)) continue;
